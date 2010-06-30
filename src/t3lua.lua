@@ -8,7 +8,8 @@ require("t3utils")
 events = {
 	join = "__join__",
 	send = "__send__",
-	listen = "__listen__"
+	listen = "__listen__",
+	leave = "__leave__"
 }
 
 
@@ -26,6 +27,7 @@ function __init(event, eventData, listenFunction, cbf)
 				alua.reg_event(events.join, __handleJoin)
 				alua.reg_event(events.send, __handleSend)
 				alua.reg_event(events.listen, __handleListen)
+				alua.reg_event(events.leave, __handleLeave)
 
 				init = true
 				processListenFunction = listenFunction
@@ -55,6 +57,12 @@ function __handleListen(msg)
 	__handleCallback(msg.cb)
 end
 
+function __handleLeave(msg)
+	log("join - " .. msg.data)
+	alua.send(alua.daemonid, "leave(\"" .. msg.data .. "\", \"" .. msg.dst .. "\")")
+	__handleCallback(msg.cb)
+end
+
 function __handleCallback(cbf)
 	if cbf then
 		cbf()
@@ -72,12 +80,16 @@ end
 
 function send(groupName, data, cbf)
 	if not init then
-		__init(events.send, groupName, cbf)
+		error("must join group first")
 	else
 		alua.send_event(alua.id, events.send, {groupName = groupName, data = data}, cbf)
 	end
 end
 
 function leave(groupName, cbf)
-	log("NIY - leave - groupName: " .. groupName)
+	if not init then
+		error("must join group first")
+	else
+		alua.send_event(alua.id, events.leave, groupName, cbf)
+	end
 end
