@@ -1,0 +1,21 @@
+#encoding utf-8
+
+Desenhar API.
+
+Ex.: createGroup, joinGroup, sendCausal, sendTotal, criticalRegion
+
+- Testar um processo estar em mais de um grupo
+- criticalRegion vai receber o método que deve ser executado exclusivamente como callback
+
+
+T3
+Entrega e apresentação - TERÇA, 06/07, 14h
+
+Pol.: 2435233
+
+
+Notou-se uma estratégia para evitar que o processo Lua interrompido em um
+select ou no loop de eventos ficasse "segurando" a porta. Para evitar este
+comportamento a abertura de conexões ou o loop é sempre feito em um processo
+aberto via fork, e o processo pai fica aguardando a saída do processo filho,
+garantindo que este será excluído quando o processo pai sair também. 

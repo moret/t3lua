@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head>
+
+
+  <title>DALua</title>
+  <meta name="keywords" content="O Sistema ALua">
+  <meta http-equiv="Content-Type" content="text/html; 
+charset=ISO-8859-1">
+  <link rel="stylesheet" href="dalua_arquivos/alua.css" type="text/css">
+</head><body text="#000000" bgcolor="#ffffff">
+  <a name="topo"></a>
+  <h1>
+  DALua - Documentação</h1>
+	<p>
+  &nbsp;</p>
+	<h2>
+  dalua</h2>
+	<p>
+  Módulo principal do DALua, contém a funcionalidade básica de 
+gerenciamento de 
+	daemons e processos.</p><p>
+  &nbsp;<a name="open"></a></p><h3>Propriedades</h3>
+	<h4>dalua.timeout = <i>número</i></h4>
+	<p>Define, em segundos, o timeout do envio de mensagens através do 
+'dalua.send'. 
+	O valor padrão é 30. Para desativar, defina como <i>nil</i>.</p>
+	<h4>dalua.debug = <i>boolean</i></h4>
+	<p>Liga ou desliga o modo debug do DALua, que imprime mensagens para 
+cada 
+	chamada de função e os valores utilizados. Por padrão está desativado (<i>false</i>).</p>
+	<h3>&nbsp;</h3>
+	<h3>dalua.init(addr, port)</h3>
+	<h4>Descrição</h4>
+	<p>Conecta-se ao daemon da máquina local, criando-o se necessário.</p>
+	<h4>Parâmetros</h4>
+      <table id="table3" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>addr</td>
+       <td>Interface na qual o novo daemon deverá escutar</td>
+       <td>string</td>
+       <td>127.0.0.1
+     </td></tr>
+     <tr>
+       <td>port</td>
+       <td>Porta na qual o novo daemon deverá escutar</td>
+       <td>número</td>
+       <td>4321</td>
+     </tr>
+     </tbody></table>
+  <h3>dalua.link(addr, port)</h3>
+	<h4>Descrição</h4>
+	<p>Estabelece conexão com a rede do daemon especificado. Todos os 
+daemons da 
+	rede local existente também são conectados.</p>
+	<h4>Parâmetros</h4>
+      <table id="table5" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     	<tr>
+       <td>addr</td>
+       <td>Endereço IP do daemon a se conectar</td>
+       <td>string</td>
+       <td>127.0.0.1
+     </td></tr>
+     	
+		<tr>
+       <td>port</td>
+       <td>Porta do daemon a se conectar</td>
+       <td>número</td>
+       <td>4321</td>
+     	</tr>
+     </tbody></table>
+  <h3>dalua.send(dest, func, ...)</h3>
+	<h4>Descrição</h4>
+	<p>Envia uma mensagem para um ou mais processos. A mensagem é composta 
+de um 
+	nome de função e seus argumentos. A função é chamada no processo 
+receptor da 
+	mensagem. Os argumentos podem ser do tipo <em>number</em>, <em>boolean</em>,
+	<em>string</em> ou <em>table</em>.</p>
+	<h4>Parâmetros</h4>
+      <table id="table10" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>dest</td>
+       <td>Identificador do processo ou tabela de identificadores dos 
+processos 
+		que receberão a mensagem</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     <tr>
+       <td>func</td>
+       <td>String com o nome da função a ser chamada</td>
+       <td>string</td>
+       <td>N/A</td>
+     </tr>
+     <tr>
+       <td>...</td>
+       <td>Argumentos a serem passados para a função</td>
+       <td>variável</td>
+       <td>nil</td>
+     </tr>
+     </tbody></table>
+  <h3>dalua.loop()</h3>
+	<h4>Descrição</h4>
+	<p>Entra no loop de eventos do ALua. Esta função não retorna.</p>
+  <h3>dalua.getindex(id)</h3>
+	<h4>Descrição</h4>
+	<p>Retorna o índice do processo com o identificador especificado. O 
+índice é 
+	relativo ao daemon local, começando em zero para o primeiro processo e 
+	aumentando sequencialmente para cada novo processo.</p>
+	<h4>Parâmetros</h4>
+      <table id="table13" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>id</td>
+       <td>Identificador do processo</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     </tbody></table>
+  <h3>dalua.self()</h3>
+	<h4>Descrição</h4>
+	<p>Retorna o identificador do processo atual.</p>
+  <h3>dalua.daemon()</h3>
+	<h4>Descrição</h4>
+	<p>Retorna o identificador do daemon atual.</p>
+  <h3>dalua.daemons()</h3>
+	<h4>Descrição</h4>
+	<p>Retorna a rede de daemons atual.</p>
+  <h3>dalua.exit()</h3>
+	<h4>Descrição</h4>
+	<p>Termina o processo atual.</p>
+	</body></html>

@@ -1,0 +1,46 @@
+﻿/*	$Id$	*/
+
+body {
+	font-family: verdana, sans-serif;
+	font-size: small;
+/*	font-size: 10px;	*/
+	line-height: 150%;
+	margin-left: 15%;
+	margin-right: 15%;
+}
+
+h2.title {
+	font-size: medium;
+/*	font-size: 14px;	*/
+	font-weight: bold;
+	border-bottom: 0px;
+	margin-bottom: 0px;
+}
+
+h3.section {
+/*	font-size: 14px;	*/
+	font-weight: bold;
+	border-bottom: 1px dashed black;
+}
+
+table.download {
+	border: 1px dashed black;
+}
+
+
+
+a:active {
+	text-decoration: none;
+}
+
+a:visited {
+	text-decoration: none;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:hover {
+	color: red;
+}

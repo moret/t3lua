@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head>
+
+
+  <title>DALua</title>
+  <meta name="keywords" content="O Sistema ALua">
+  <meta http-equiv="Content-Type" content="text/html; 
+charset=ISO-8859-1">
+  <link rel="stylesheet" href="app_arquivos/alua.css" type="text/css">
+</head><body text="#000000" bgcolor="#ffffff">
+  <a name="topo"></a>
+  <h1>
+  DALua - Documentação</h1>
+	<p>
+  &nbsp;</p>
+	<h2>
+  dalua.app</h2>
+	<p>
+  Módulo de suporte a aplicações. Cada aplicação é um grupo lógico de 
+processos.</p><h3>
+	&nbsp;</h3>
+	<h3>dalua.app.init()</h3>
+	<h4>Descrição</h4>
+	<p>Inicializa o sistema de aplicações DALua no daemon corrente. Deve 
+ser 
+	chamado por cada processo antes de se utilizar as demais 
+	funções do módulo dalua.app.</p>
+	<h3>dalua.app.create(app)</h3>
+	<h4>Descrição</h4>
+	<p>Cria uma aplicação DALua com o nome especificado na rede conhecida 
+de 
+	daemons. Caso já exista, um evento de erro é gerado.</p>
+	<h4>Parâmetros</h4>
+      <table id="table16" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>app</td>
+       <td>Nome da aplicação</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     </tbody></table>
+  <h3>dalua.app.join(app)</h3>
+	<h4>Descrição</h4>
+	<p>Entra na aplicação especificada. Caso não exista, um evento de erro é
+ 
+	gerado.</p>
+	<h4>Parâmetros</h4>
+      <table id="table17" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>app</td>
+       <td>Nome da aplicação</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     	</tbody></table>
+  <h3>dalua.app.processes(app)</h3>
+	<h4>Descrição</h4>
+	<p>Retorna uma tabela contendo os identificadores de todos os processos
+ de 
+	uma aplicação.</p>
+	<h4>Parâmetros</h4>
+      <table id="table24" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>app</td>
+       <td>Nome da aplicação</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     </tbody></table>
+	<h3>dalua.app.applications()</h3>
+	<h4>Descrição</h4>
+	<p>Retorna uma tabela contendo os nomes das aplicações de que o 
+processo 
+	atual participa.</p>
+  <h3>dalua.app.leave(app)</h3>
+	<h4>Descrição</h4>
+	<p>Sai da aplicação especificada.</p>
+	<h4>Parâmetros</h4>
+      <table id="table28" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>app</td>
+       <td>Nome da aplicação</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     </tbody></table>
+  <h3>dalua.app.destroy(app)</h3>
+	<h4>Descrição</h4>
+	<p>Desfaz a aplicação especificada.</p>
+	<h4>Parâmetros</h4>
+      <table id="table29" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>app</td>
+       <td>Nome da aplicação</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     </tbody></table>
+  <h3>dalua.app.link(addr, port)</h3>
+	<h4>Descrição</h4>
+	<p>Possibilita o uso de aplicações distribuídas em diferentes daemons. 
+Esta 
+	função deve ser chamada após o 'dalua.link' completar com sucesso, 
+	utilizando o mesmo endereço e porta.</p>
+	<p>O efeito é que as aplicações que existem na rede em que se conectou 
+	tornam-se acessíveis aos processos do daemon local e vice-versa. Caso o
+ 
+	daemon local tenha aplicações com mesmo nome, elas serão sobrescritas.</p>
+	<p>Diferentemente do 'dalua.link', esta chamada atinge apenas o daemon 
+do 
+	processo que chamou a função, e não a rede completa.</p>
+	<h4>Parâmetros</h4>
+      <table id="table5" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     	<tr>
+       <td>addr</td>
+       <td>Endereço IP do daemon a se conectar</td>
+       <td>string</td>
+       <td>N/A</td></tr>
+     	
+		<tr>
+       <td>port</td>
+       <td>Porta do daemon a se conectar</td>
+       <td>número</td>
+       <td>N/A</td>
+     	</tr>
+     </tbody></table>
+  </body></html>

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head>
+
+
+  <title>DALua</title>
+  <meta name="keywords" content="O Sistema ALua">
+  <meta http-equiv="Content-Type" content="text/html; 
+charset=ISO-8859-1">
+  <link rel="stylesheet" href="timer_arquivos/alua.css" type="text/css">
+</head><body text="#000000" bgcolor="#ffffff">
+  <a name="topo"></a>
+  <h1>
+  DALua - Documentação</h1>
+	<p>
+  &nbsp;</p>
+	<h2>
+  dalua.timer</h2>
+	<p>
+  Módulo do sistema de temporizadores. Permite executar tarefas 
+periodicamente 
+	no processo local ou em processos remotos.</p>
+	<h3>dalua.timer.add(id, period, count, func, ...)</h3>
+	<h4>Descrição</h4>
+	<p>Cria um temporizador no processo especificado. A função <i>func</i> 
+será 
+	chamada <i>count</i> vezes a cada <i>duration</i> segundos. Se <i>count</i>
+ 
+	for igual a zero, o temporizador só terminará após ser removido.</p>
+	<p>Retorna o identificador do temporizador.</p>
+	<h4>Parâmetros</h4>
+      <table id="table3" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>id</td>
+       <td>Identificador do processo</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     <tr>
+       <td>period</td>
+       <td>Intervalo em segundos entre as chamadas </td>
+       <td>número</td>
+       <td>N/A</td></tr>
+     <tr>
+       <td>count</td>
+       <td>Número de vezes, zero para infinito</td>
+       <td>número</td>
+       <td>N/A</td></tr>
+     	<tr>
+       <td>func</td>
+       <td>String com o nome da função a ser chamada</td>
+       <td>string</td>
+       <td>N/A</td>
+     	</tr>
+		<tr>
+       <td>...</td>
+       <td>Argumentos a serem passados para a função</td>
+       <td>variável</td>
+       <td>nil</td>
+     	</tr>
+     </tbody></table>
+  <h3>dalua.timer.remove(timer)</h3>
+	<h4>Descrição</h4>
+	<p>Remove o temporizador especificado.</p>
+	<h4>Parâmetros</h4>
+      <table id="table4" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>timer</td>
+       <td>Identificador do temporizador</td>
+       <td>número</td>
+       <td>N/A
+     </td></tr>
+     	</tbody></table>
+  </body></html>
