@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head>
+
+
+  <title>DALua</title>
+  <meta name="keywords" content="O Sistema ALua">
+  <meta http-equiv="Content-Type" content="text/html; 
+charset=ISO-8859-1">
+  <link rel="stylesheet" href="mutex_arquivos/alua.css" type="text/css">
+</head><body text="#000000" bgcolor="#ffffff">
+  <a name="topo"></a>
+  <h1>
+  DALua - Documentação</h1>
+	<p>
+  &nbsp;</p>
+	<h2>
+  dalua.mutex</h2>
+	<p>
+  Módulo de exclusão mútua distribuída.</p>
+	<h3>dalua.mutex.create(id, procs)</h3>
+	<h4>Descrição</h4>
+	<p>Cria um objeto de exclusão mútua (Mutex) com o identificador 
+	especificado nos processos listados. Caso já exista, um evento de erro é
+ gerado.</p>
+	<h4>Parâmetros</h4>
+      <table id="table3" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>id</td>
+       <td>Identificador do Mutex</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     <tr>
+       <td>procs</td>
+       <td>Tabela de processos</td>
+       <td>table</td>
+       <td>N/A</td></tr>
+     </tbody></table>
+  <h3>dalua.mutex.enter(id, func, ...)</h3>
+	<h4>Descrição</h4>
+	<p>Requisita acesso à região crítica do Mutex especificado. Quando o 
+acesso 
+	for obtido, <i>func</i> será chamada com os argumentos passados. Caso o
+ 
+	identificador não exista, um evento de erro é gerado.</p>
+	<h4>Parâmetros</h4>
+      <table id="table4" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>id</td>
+       <td>Identificador do Mutex</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     	<tr>
+       <td>func</td>
+       <td>Função a ser chamada</td>
+       <td>function</td>
+       <td>N/A</td>
+     	</tr>
+		<tr>
+       <td>...</td>
+       <td>Argumentos a serem passados para a função</td>
+       <td>variável</td>
+       <td>nil</td>
+     	</tr>
+     </tbody></table>
+  <h3>dalua.mutex.leave(id)</h3>
+	<h4>Descrição</h4>
+	<p>Libera o acesso à região crítica do Mutex especificado.</p>
+	<h4>Parâmetros</h4>
+      <table id="table5" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     	<tr>
+       <td>id</td>
+       <td>Identificador do Mutex</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     	
+     </tbody></table>
+  <h3>dalua.mutex.destroy(id)</h3>
+	<h3>Descrição</h3>
+	<p>Destrói o objeto de exclusão mútua especificado, caso exista.</p>
+	<h4>Parâmetros</h4>
+      <table id="table27" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     	<tr>
+       <td>id</td>
+       <td>Identificador do Mutex</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     	
+     </tbody></table>
+	<h3>dalua.mutex.add(id, proc)</h3>
+	<h4>Descrição</h4>
+	<p>Adiciona um processo ao grupo de processos do Mutex especificado. 
+Esta 
+	função deve ser chamada por um processo que já participa do Mutex, 
+quando
+	<strong>não</strong> estiver na região crítica.</p>
+	<h4>Parâmetros</h4>
+      <table id="table28" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>id</td>
+       <td>Identificador do Mutex</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     <tr>
+       <td>proc</td>
+       <td>Identificador do processo a ser adicionado</td>
+       <td>string</td>
+       <td>N/A</td></tr>
+     </tbody></table>
+	<h3>dalua.mutex.remove(id, proc)</h3>
+	<h4>Descrição</h4>
+	<p>Remove um processo do grupo de processos do Mutex especificado. Esta
+ 
+	função deve ser chamada por um processo que já participa do Mutex 
+(podendo 
+	inclusive ser o próprio removido), quando <strong>não</strong> estiver 
+na 
+	região crítica.</p>
+	<h4>Parâmetros</h4>
+      <table id="table29" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>id</td>
+       <td>Identificador do Mutex</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     <tr>
+       <td>proc</td>
+       <td>Identificador do processo a ser removido</td>
+       <td>string</td>
+       <td>N/A</td></tr>
+     </tbody></table>
+  </body></html>

@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head>
+
+
+  <title>DALua</title>
+  <meta name="keywords" content="O Sistema ALua">
+  <meta http-equiv="Content-Type" content="text/html; 
+charset=ISO-8859-1">
+  <link rel="stylesheet" href="events_arquivos/alua.css" type="text/css">
+	<style type="text/css">
+.style1 {
+	color: #FF0000;
+}
+</style>
+</head><body text="#000000" bgcolor="#ffffff">
+  <a name="topo"></a>
+  <h1>
+  DALua - Documentação</h1>
+	<p>
+  &nbsp;</p>
+	<h2>
+  dalua.events</h2>
+	<p>
+  Módulo do sistema de eventos do DALua. Vários eventos são gerados 
+	automaticamente pelo DALua. Quando um evento que está sendo monitorado é
+ 
+	disparado, seu tratador correspondente é chamado.</p>
+<p>
+  Eventos prefixados com "<em>dalua_</em>" são reservados para uso da 
+biblioteca 
+	DALua.</p>
+  <h3>dalua.events.raise(event, procs, ...)</h3>
+	<h4>Descrição</h4>
+	<p>Dispara o evento nos processos especificados.</p>
+	<h4>Parâmetros</h4>
+      <table id="table4" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>event</td>
+       <td>Identificador do evento</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     	<tr>
+       <td>procs</td>
+       <td>Processos que receberão o evento</td>
+       <td>table</td>
+       <td>N/A</td>
+     	</tr>
+		<tr>
+       <td>...</td>
+       <td>Argumentos a serem passados para o tratador do evento</td>
+       <td>variável</td>
+       <td>nil</td>
+     	</tr>
+     </tbody></table>
+  <h3>dalua.events.monitor(event, handler)</h3>
+	<h4>Descrição</h4>
+	<p>Ativa o monitoramento do evento especificado com o tratador passado 
+em
+	<em>handler</em>. Um evento pode ter mais de um tratador.</p>
+	<h4>Parâmetros</h4>
+      <table id="table5" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     	<tr>
+       <td>event</td>
+       <td>Identificador do evento</td>
+       <td>string</td>
+       <td>N/A</td></tr>
+     	
+		<tr>
+       <td>handler</td>
+       <td>Tratador do evento</td>
+       <td>função</td>
+       <td>N/A</td></tr>
+     	
+     </tbody></table>
+  <h3>dalua.events.ignore(event, handler)</h3>
+	<h3>Descrição</h3>
+	<p>Remove o tratador especificado para este evento.</p>
+	<h4>Parâmetros</h4>
+      <table id="table27" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     	<tr>
+       <td>event</td>
+       <td>Identificador do evento</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     	
+     	<tr>
+       <td>handler</td>
+       <td>Tratador do evento</td>
+       <td>função</td>
+       <td>N/A</td></tr>
+     	
+     </tbody></table>
+  <h3 class="style1">-- EXPERIMENTAL --</h3>
+	<p class="style1">As funções a seguir funcionam apenas com eventos do 
+módulo 
+	principal DALua. Suporte aos demais módulos será adicionado depois.</p>
+	<h3>dalua.events.customize(event, new_event, func)<br>
+	dalua.events.customize(events, func)</h3>
+	<h4>Descrição</h4>
+	<p>Redefine um ou mais eventos disparados na função especificada.</p>
+<p>Caso <em>event</em> e <em>new_event</em> estejam definidos, redefine 
+apenas o 
+evento <em>event</em>, que passa a disparar <em>new_event</em>. Caso 
+contrário, 
+o primeiro argumento deve ser a tabela <em>events</em> onde os índices 
+são os 
+eventos a serem redefinidos e os valores são os novos eventos.</p>
+<p>Retorna uma cópia da função <em>func</em>, com o(s) seu(s) evento(s) 
+redefinido(s).</p>
+	<h4>Parâmetros</h4>
+      <table id="table29" border="0">
+      <tbody><tr>
+        <td><b>Nome</b></td>
+	<td><b>Valor</b></td>
+	<td><b>Tipo</b></td>
+	<td><b>Padrão</b></td>
+     </tr>
+     <tr>
+       <td>event</td>
+       <td>Identificador do evento a ser redefinido</td>
+       <td>string</td>
+       <td>N/A
+     </td></tr>
+     	<tr>
+       <td>new_event</td>
+       <td>Identificador do novo evento</td>
+       <td>string</td>
+       <td>N/A</td>
+     	</tr>
+		<tr>
+       <td>events</td>
+       <td>Tabela de redefinição de eventos, no formato {"event" = 
+"new_event"}</td>
+       <td>table</td>
+       <td>N/A</td>
+     	</tr>
+		<tr>
+       <td>func</td>
+       <td>Função cujos eventos serão redefinidos</td>
+       <td>function</td>
+       <td>N/A</td>
+     	</tr>
+     </tbody></table>
+	<h4>Exemplos</h4>
+	<pre>dalua.events.monitor("envio_concluído", foo)
+dalua.events.customize("dalua_send", "envio_concluído", dalua.send)("print", "alo alo")
+
+dalua.events.customize({ "evento1" = "fim_evt1", "evento2" = "fim_evt2" }, bar)(args)</pre>
+  <h3>dalua.getcustomevents()</h3>
+	<h4>Descrição</h4>
+	<p>Retorna uma tabela com os eventos que estão redefinidos para a 
+função 
+	corrente. Útil para propagar as redefinições às funções aninhadas que 
+não 
+	são chamadas imediatamente.</p>
+	<h4>Exemplo</h4>
+	<pre>function foo ( )
+	local function callback ( )
+		dalua.events.raise("evento", "teste")
+	end
+	callback = dalua.events.customize(dalua.events.getcustomevents(), callback)
+	
+	-- a função callback é chamada após o retorno de foo, portanto
+	-- deve-se utilizar a técnica acima para propagar os eventos
+	bar("alo alo", callback)
+end</pre>
+  </body></html>
