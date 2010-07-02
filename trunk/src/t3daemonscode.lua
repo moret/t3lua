@@ -2,38 +2,38 @@ require("t3lua")
 
 groups = {}
 
-function join(group, processid)
+function join(group, src)
 	for _, daemon in pairs(alua.getdaemons()) do
-		alua.send(daemon, "__join(\"" .. group .. "\", \"" .. processid .. "\")")
+		alua.send(daemon, "__join(\"" .. group .. "\", \"" .. src .. "\")")
 	end
 end
 
-function __join(group, processid)
+function __join(group, src)
 	if not groups.group then
 		groups.group = {}
 	end
-	groups.group[processid] = true
-	print("joined " .. processid .. " to group " .. group .. " on daemon " .. alua.daemonid)
+	groups.group[src] = true
+	print("joined " .. src .. " to group " .. group .. " on daemon " .. alua.daemonid)
 end
 
-function send(group, data)
+function send(group, src, data)
 	if groups.group then
-		for processid in pairs(groups.group) do
-			alua.send_event(processid, t3lua.events.listen, {groupName = group, data = data})
+		for dst in pairs(groups.group) do
+			alua.send_event(dst, t3lua.events.listen, {data = data, group = group, src = src})
 		end
 	end
 end
 
-function leave(group, processid)
+function leave(group, src)
 	for _, daemon in pairs(alua.getdaemons()) do
-		alua.send(daemon, "__leave(\"" .. group .. "\", \"" .. processid .. "\")")
+		alua.send(daemon, "__leave(\"" .. group .. "\", \"" .. src .. "\")")
 	end
 end
 
-function __leave(group, processid)
+function __leave(group, src)
 	if groups.group then
-		groups.group[processid] = nil
-		print("left " .. processid .. " from group " .. group .. " on daemon " .. alua.daemonid)
+		groups.group[src] = nil
+		print("left " .. src .. " from group " .. group .. " on daemon " .. alua.daemonid)
 	end
 end
 
