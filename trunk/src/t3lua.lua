@@ -14,6 +14,8 @@ events = {
 id = nil
 local daemonHost = nil
 local processListenFunction = nil
+local logicClock
+local holdback = {}
 
 
 function __callCallback(cbf)
@@ -24,7 +26,16 @@ end
 
 function __handleListen(msg)
 	log("listen - " .. msg.data.data)
-	processListenFunction(msg.data)
+	if msg.data.seq then
+		-- sequenced message, totally ordered
+	
+	elseif msg.data.timestamp then
+		-- timestamped message, causally ordered
+		
+	else
+		-- unsynchronized message
+		processListenFunction(msg.data)
+	end
 	__callCallback(msg.cb)
 end
 
@@ -38,8 +49,7 @@ end
 
 function init(listenFunction, cbf)
 	if not id then
-		math.randomseed(os.time())
-		daemonHost = t3hosts[math.random(#t3hosts)]
+		daemonHost = t3hosts[getRandom(#t3hosts)]
 		function __initRegEvents(reply)
 			if reply.status == alua.ALUA_STATUS_OK then
 				alua.reg_event(events.listen, __handleListen)
@@ -69,6 +79,16 @@ function send(group, data, cbf)
 	else
 		log("send - group " .. group .. " - " .. data)
 		alua.send(alua.daemonid, "send(\"" .. group .. "\", \"" .. alua.id .. "\", \"" .. data .. "\")")
+		__callCallback(cbf)
+	end
+end
+
+function sendTotal(group, data, cbf)
+	if not id then
+		error("must init first")
+	else
+		log("sendTotal - group " .. group .. " - " .. data)
+		alua.send(alua.daemonid, "sendTotal(\"" .. group .. "\", \"" .. alua.id .. "\", \"" .. data .. "\")")
 		__callCallback(cbf)
 	end
 end

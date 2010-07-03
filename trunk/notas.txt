@@ -19,3 +19,7 @@ select ou no loop de eventos ficasse "segurando" a porta. Para evitar este
 comportamento a abertura de conexões ou o loop é sempre feito em um processo
 aberto via fork, e o processo pai fica aguardando a saída do processo filho,
 garantindo que este será excluído quando o processo pai sair também. 
+
+Possível melhoria: trocar as chamadas ao daemon via send para eventos, assim não tem que fazer aquela string horrível
+
+

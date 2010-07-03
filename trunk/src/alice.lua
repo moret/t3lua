@@ -5,9 +5,9 @@ function listenFunction(msg)
 
 	if not (msg.src == t3lua.id) then
 		if msg.data == "Hello Alice!" then
-			t3lua.send("chat", "Hello Bob!")
+			t3lua.sendTotal("chat", "Hello Bob!")
 		elseif msg.data == "Bye Alice!" then
-			t3lua.send("chat", "Bye Bob!")
+			t3lua.sendTotal("chat", "Bye Bob!")
 		end
 	end
 end
@@ -19,7 +19,7 @@ function leaveFunction()
 end
 
 function greetEveryone()
-	t3lua.send("chat", "Hello everyone!")
+	t3lua.sendTotal("chat", "Hello everyone!")
 end
 
 t3lua.initAndJoin("chat", listenFunction, greetEveryone)
