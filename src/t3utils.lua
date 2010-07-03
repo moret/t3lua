@@ -1,3 +1,16 @@
+require("socket")
+
+math.randomseed(os.time())
+
+function sleep(sec)
+	--print("going to sleep for a while...")
+	socket.select(nil, nil, sec)
+end
+
+function getRandom(num)
+	return math.random(num)
+end
+
 function log(msg)
 	if __debug then print(msg) end
 end
