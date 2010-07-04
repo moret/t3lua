@@ -67,3 +67,23 @@ function table.tostring( tbl )
 	end
 end
 
+
+function table.copy(orig_table, dest_table, recursive, copy_metatable)
+	assert(orig_table, "Parameter 'orig_table' must not be nil.")
+	dest_table = dest_table or {}
+	
+	for key, value in pairs(orig_table) do
+		if recursive and type(value) == "table" then
+			dest_table[key] = {}
+			table.copy(value, dest_table[key], recursive, copy_metatable)
+		else
+			dest_table[key] = value
+		end
+	end
+	
+	if copy_metatable then
+		setmetatable(dest_table, getmetatable(orig_table))
+	end
+	
+	return dest_table
+end
