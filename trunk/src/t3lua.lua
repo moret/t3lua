@@ -15,7 +15,11 @@ id = nil
 local daemonHost = nil
 local processListenFunction = nil
 local logicClock
+local seq = nil
 local holdback = {}
+
+local __bogus = false
+local __debug = false
 
 
 function __callCallback(cbf)
@@ -28,7 +32,18 @@ function __handleListen(msg)
 	log("listen - " .. msg.data.data)
 	if msg.data.seq then
 		-- sequenced message, totally ordered
-	
+		-- checking if it's the first message received
+		if not seq then
+			seq = msg.data.seq
+		end
+		log("sequenced message arrived, current seq: " .. seq .. ", msg.data.seq: " .. msg.data.seq)
+		holdback[msg.data.seq] = msg
+		if holdback[seq] then
+			popmsg = holdback[seq]
+			holdback[seq] = nil
+			seq = seq + 1
+			processListenFunction(popmsg.data)
+		end			
 	elseif msg.data.timestamp then
 		-- timestamped message, causally ordered
 		
@@ -47,7 +62,7 @@ function initAndJoin(group, listenFunction, cbf)
 	init(listenFunction, __cbf)
 end
 
-function init(listenFunction, cbf)
+function init(listenFunction, cbf, debugMode, bogusMode)
 	if not id then
 		daemonHost = t3hosts[getRandom(#t3hosts)]
 		function __initRegEvents(reply)
@@ -55,6 +70,8 @@ function init(listenFunction, cbf)
 				alua.reg_event(events.listen, __handleListen)
 				processListenFunction = listenFunction
 				id = reply.id
+				__debug = debugMode
+				__bogus = bogusMode
 				__callCallback(cbf)
 			end
 		end
@@ -86,6 +103,9 @@ end
 function sendTotal(group, data, cbf)
 	if not id then
 		error("must init first")
+	elseif __bogus then
+		log("sendTotal bogus - calling send")
+		send(group, data, cbf)
 	else
 		log("sendTotal - group " .. group .. " - " .. data)
 		alua.send(alua.daemonid, "sendTotal(\"" .. group .. "\", \"" .. alua.id .. "\", \"" .. data .. "\")")

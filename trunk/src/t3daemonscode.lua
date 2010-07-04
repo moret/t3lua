@@ -1,6 +1,8 @@
 require("t3lua")
+require("t3utils")
 
 sequencer = nil
+seq = 1
 groups = {}
 
 function join(group, src)
@@ -26,7 +28,16 @@ function send(group, src, data)
 end
 
 function sendTotal(group, src, data)
-	alua.send(sequencer, "send(\"" .. group .. "\", \"" .. alua.id .. "\", \"" .. data .. "\")")
+	alua.send(sequencer, "__sendTotal(\"" .. group .. "\", \"" .. src .. "\", \"" .. data .. "\")")
+end
+
+function __sendTotal(group, src, data)
+	if groups.group then
+		for dst in pairs(groups.group) do
+			alua.send_event(dst, t3lua.events.listen, {data = data, group = group, src = src, seq = seq})
+		end
+		seq = seq + 1
+	end
 end
 
 function leave(group, src)
