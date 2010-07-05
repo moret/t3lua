@@ -55,7 +55,7 @@ function __handleListen(msg)
 end
 
 
-function initAndJoin(group, listenFunction, cbf)
+function initAndJoin(group, listenFunction, cbf, debugMode, bogusMode)
 	function __cbf()
 		join(group, cbf)
 	end
