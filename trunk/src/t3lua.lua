@@ -15,8 +15,8 @@ id = nil
 local daemonHost = nil
 local processListenFunction = nil
 local logicClock
-local seq = nil
-local holdback = {}
+local totalsequence = nil
+local totalholdback = {}
 
 local __bogus = false
 local __debug = false
@@ -33,23 +33,26 @@ function __handleListen(msg)
 	if msg.data.seq then
 		-- sequenced message, totally ordered
 		-- checking if it's the first message received
-		if not seq then
-			seq = msg.data.seq
+		if not totalsequence then
+			totalsequence = msg.data.seq
 		end
-		log("sequenced message arrived, current seq: " .. seq .. ", msg.data.seq: " .. msg.data.seq)
-		holdback[msg.data.seq] = msg
-		if holdback[seq] then
-			popmsg = holdback[seq]
-			holdback[seq] = nil
-			seq = seq + 1
-			processListenFunction(popmsg.data)
-		end			
+		log("sequenced message arrived, current seq: " .. totalsequence .. ", msg.data.seq: " .. msg.data.seq)
+		totalholdback[msg.data.seq] = msg
+		poppedmsgs = {}
+		while totalholdback[totalsequence] do
+			poppedmsgs[#poppedmsgs + 1] = totalholdback[totalsequence].data
+			totalholdback[totalsequence] = nil
+			totalsequence = totalsequence + 1
+		end
+		if #poppedmsgs > 0 then
+			processListenFunction(poppedmsgs)
+		end
 	elseif msg.data.timestamp then
 		-- timestamped message, causally ordered
 		
 	else
 		-- unsynchronized message
-		processListenFunction(msg.data)
+		processListenFunction({msg.data})
 	end
 	__callCallback(msg.cb)
 end
