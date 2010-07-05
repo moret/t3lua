@@ -58,8 +58,8 @@ function sendTotal(group, src, data)
 end
 
 function __sendTotal(group, src, data)
-	if groups.group then
-		for dst in pairs(groups.group) do
+	if groups[group] then
+		for dst in pairs(groups[group]) do
 			alua.send_event(dst, t3lua.events.listen, {data = data, group = group, src = src, seq = seq})
 		end
 		seq = seq + 1
