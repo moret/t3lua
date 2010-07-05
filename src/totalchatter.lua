@@ -15,12 +15,20 @@ function sayRandomNumber()
 	t3lua.sendTotal(randomGroup, chatter.name .. "," .. randomNumber)
 end
 
-function listenFunction(msg)
-	print("received," .. msg.group .. "," .. msg.data)
-	logfile:write(msg.data .. "\n")
-	logfile:flush()
-	if not (msg.src == t3lua.id) then
-		sleep(getRandom(2))
+function listenFunction(msgs)
+	local reply = false
+	for _, msg in pairs(msgs) do
+		print("received," .. msg.group .. "," .. msg.data)
+		logfile:write(msg.data .. "\n")
+		logfile:flush()
+		if not (msg.src == t3lua.id) then
+			reply = true
+		end
+	end
+	if reply then
+		if getRandom(3) == 1 then
+			sleep(1)
+		end
 		sayRandomNumber()
 	end
 end
