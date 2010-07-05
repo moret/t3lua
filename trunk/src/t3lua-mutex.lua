@@ -98,6 +98,21 @@ end
 
 
 --[[
+| Auxiliar function that wraps a function call with arguments in a
+| temporary wrap function without arguments.
+| Can be used to generate a callback function for t3lua-mutex.lua:enter().
+--]]
+function _M.wrap(func, ...)
+	local N = select("#", ...)
+	local ARGS = {...}
+	
+	return function()
+		func( unpack(ARGS, 1, N) )
+	end
+end
+
+
+--[[
 | Callback function that will be called by the daemon when it returns
 | the list of group members.
 | See t3lua-mutex.lua:_M.enter() and t3daemonscode.lua:getMembers().
