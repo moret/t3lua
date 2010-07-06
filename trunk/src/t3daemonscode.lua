@@ -45,22 +45,22 @@ function __join(group, src)
 	print("joined " .. src .. " to group " .. group .. " on daemon " .. alua.daemonid)
 end
 
-function send(group, src, data)
-	if groups[group] then
-		for dst in pairs(groups[group]) do
-			alua.send_event(dst, t3lua.events.listen, {data = data, group = group, src = src})
+function __handleRelay(msg)
+	if groups[msg.data.group] then
+		for dst in pairs(groups[msg.data.group]) do
+			alua.send_event(dst, t3lua.events.listen, {data = msg.data.data, group = msg.data.group, src = msg.data.src})
 		end
-	end
+	end	
 end
 
-function sendTotal(group, src, data)
-	alua.send(sequencer, "__sendTotal(\"" .. group .. "\", \"" .. src .. "\", \"" .. data .. "\")")
+function __handleRelayTotalLocal(msg)
+	alua.send_event(sequencer, t3lua.events.relayTotalSequencer, msg.data)
 end
 
-function __sendTotal(group, src, data)
-	if groups[group] then
-		for dst in pairs(groups[group]) do
-			alua.send_event(dst, t3lua.events.listen, {data = data, group = group, src = src, seq = seq})
+function __handleRelayTotalSequencer(msg)
+	if groups[msg.data.group] then
+		for dst in pairs(groups[msg.data.group]) do
+			alua.send_event(dst, t3lua.events.listen, {data = msg.data.data, group = msg.data.group, src = msg.data.src, seq = seq})
 		end
 		seq = seq + 1
 	end
@@ -78,4 +78,8 @@ function __leave(group, src)
 		print("left " .. src .. " from group " .. group .. " on daemon " .. alua.daemonid)
 	end
 end
+
+alua.reg_event(t3lua.events.relay, __handleRelay)
+alua.reg_event(t3lua.events.relayTotal, __handleRelayTotalLocal)
+alua.reg_event(t3lua.events.relayTotalSequencer, __handleRelayTotalSequencer)
 
