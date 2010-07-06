@@ -160,7 +160,8 @@ function sendCausal(group, data, cbf)
 		send(group, data, cbf)
 	else
 		log("sendTotal - group " .. group .. " - " .. data)
-		alua.send_event(alua.daemonid, t3lua.events.relayCausal, {group = group, src = alua.id, data = data}, cbf)
+		causalclocks[id] = causalclocks[id] + 1
+		alua.send_event(alua.daemonid, t3lua.events.relay, {group = group, src = alua.id, data = data, clocks = causalclocks}, cbf)
 	end
 end
 
