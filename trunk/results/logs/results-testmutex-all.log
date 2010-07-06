@@ -1,0 +1,59 @@
+thiago@ubuntu:~/Dev/Eclipse/Sist_Dist_T3/trunk/src$ lua testmutex-all.lua
+
+=== Testing with true mutex ===
+
+111	Entering critical region...
+127.0.0.1:11115/1 requesting grupoA.mutexI for 127.0.0.1:11115/1
+127.0.0.1:11115/1 received request for grupoA.mutexI by 127.0.0.1:11115/1
+127.0.0.1:11115/1 said ok
+127.0.0.1:11115/1 received reply for grupoA.mutexI from 127.0.0.1:11115/1: ok
+111	Entered critical region.
+111	Waiting for:	15
+222	Entering critical region...
+127.0.0.1:11115/2 requesting grupoA.mutexI for 127.0.0.1:11115/2
+127.0.0.1:11115/2 requesting grupoA.mutexI for 127.0.0.1:11115/1
+127.0.0.1:11115/2 received request for grupoA.mutexI by 127.0.0.1:11115/2
+127.0.0.1:11115/2 said ok
+127.0.0.1:11115/2 received reply for grupoA.mutexI from 127.0.0.1:11115/2: ok
+333	Entering critical region...
+127.0.0.1:11115/3 requesting grupoA.mutexI for 127.0.0.1:11115/3
+127.0.0.1:11115/3 requesting grupoA.mutexI for 127.0.0.1:11115/1
+127.0.0.1:11115/3 requesting grupoA.mutexI for 127.0.0.1:11115/2
+127.0.0.1:11115/3 received request for grupoA.mutexI by 127.0.0.1:11115/3
+127.0.0.1:11115/3 said ok
+127.0.0.1:11115/3 received reply for grupoA.mutexI from 127.0.0.1:11115/3: ok
+127.0.0.1:11115/2 received request for grupoA.mutexI by 127.0.0.1:11115/3
+127.0.0.1:11115/2 said no
+127.0.0.1:11115/3 received reply for grupoA.mutexI from 127.0.0.1:11115/2: no
+127.0.0.1:11115/3 droped request.	FREE
+333	Could not get access to critical region. Leaving group.
+111	Woke up and said:	Hello!
+111	Left critical region.
+127.0.0.1:11115/1 received request for grupoA.mutexI by 127.0.0.1:11115/2
+127.0.0.1:11115/1 said ok
+127.0.0.1:11115/2 received reply for grupoA.mutexI from 127.0.0.1:11115/1: ok
+222	Entered critical region.
+222	Waiting for:	15
+222	Woke up and said:	Hello!
+222	Left critical region.
+
+=== Testing with false mutex ===
+
+222	Entering critical region...
+222	Entered critical region.
+222	Waiting for:	15
+111	Entering critical region...
+111	Entered critical region.
+111	Waiting for:	15
+333	Entering critical region...
+333	Entered critical region.
+333	Waiting for:	15
+222	Woke up and said:	Hello!
+111	Woke up and said:	Hello!
+222	Left critical region.
+111	Left critical region.
+333	Woke up and said:	Hello!
+333	Left critical region.
+
+=== End of tests ===
+

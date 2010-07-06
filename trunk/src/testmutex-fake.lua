@@ -10,6 +10,15 @@ local sleep = arg[4] or 15
 local msg   = arg[5] or "Hello!"
 
 
+-- Redefine with fake funcitons
+function t3lua.mutex.enter(group, mutex, crcb, crerrcb)
+	crcb()
+end
+
+function t3lua.mutex.leave()
+end
+---
+
 local function ID()
 	return _ID or alua.id
 end
