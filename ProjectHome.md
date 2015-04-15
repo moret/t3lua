@@ -1,0 +1,1 @@
+Biblioteca de sincronização sobre o alua.
